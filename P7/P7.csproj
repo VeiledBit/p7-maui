@@ -72,4 +72,6 @@
 	  <Folder Include="Views\" />
 	</ItemGroup>
 
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionP7HideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
 </Project>

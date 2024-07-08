@@ -1,14 +1,16 @@
 ﻿using P7.Models;
 using P7.Services;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace P7.ViewModels
 {
     public class SalesViewModel : INotifyPropertyChanged
     {
         private readonly SaleItemService _saleItemService;
-        private List<SaleItem> _saleItems;
+        private ObservableCollection<SaleItem> _saleItems;
         private List<string> _saleItemsCategories;
         public List<string> Stores { get; } = new List<string> { "maxi", "lidl", "elakolije", "gomex", "dis" };
         private int _selectedStoreIndex;
@@ -22,8 +24,9 @@ namespace P7.ViewModels
         private bool _isLoadMoreButtonVisible;
         private bool _isLoading;
         private bool _isRecommended;
+        private int _currentPage;
 
-        public List<SaleItem> SaleItems
+        public ObservableCollection<SaleItem> SaleItems
         {
             get => _saleItems;
             set
@@ -131,19 +134,31 @@ namespace P7.ViewModels
         public SalesViewModel()
         {
             _saleItemService = new SaleItemService();
+            _saleItems = new ObservableCollection<SaleItem>();
+            _currentPage = 1;
+            LoadMoreCommand = new Command(LoadMoreItems);
             SelectedStoreIndex = 0;
             SelectedStore = Stores[SelectedStoreIndex];
             SelectedSortingIndex = 0;
             SelectedSorting = Sorting[SelectedSortingIndex];
             IsRecommended = true;
-            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended);
+            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended, _currentPage);
         }
 
-        private async void LoadSaleItems(string storeName, string sorting, bool isRecommended)
+        private async void LoadSaleItems(string storeName, string sorting, bool isRecommended, int currentPage)
         {
             IsLoading = true;
-            var response = await _saleItemService.getSaleItemsAsync(storeName, sorting, isRecommended);
-            SaleItems = response.Items;
+            var response = await _saleItemService.getSaleItemsAsync(storeName, sorting, isRecommended, currentPage);
+            if (currentPage == 1)
+            {
+                SaleItems = new ObservableCollection<SaleItem>(response.Items);
+            } else
+            {
+                foreach (var item in response.Items)
+                {
+                    SaleItems.Add(item);
+                }
+            }
             SaleItemsCategories = response.Categories;
             IsLoadMoreButtonVisible = response.Items?.Count == 60;
             IsLoading = false;
@@ -152,26 +167,36 @@ namespace P7.ViewModels
         private void OnStoreChanged()
         {
             SelectedStore = Stores[SelectedStoreIndex];
-            SaleItems = new List<SaleItem>();
+            SaleItems.Clear();
             IsLoadMoreButtonVisible = false;
-            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended);
+            _currentPage = 1;
+            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended, _currentPage);
         }
 
         private void OnSortingChanged()
         {
             SelectedSorting = Sorting[SelectedSortingIndex];
-            SaleItems = new List<SaleItem>();
+            SaleItems.Clear();
             IsLoadMoreButtonVisible = false;
-            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended);
+            _currentPage = 1;
+            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended, _currentPage);
         }
 
         private void OnIsRecommendedChanged()
         {
-            SaleItems = new List<SaleItem>();
+            SaleItems.Clear();
             IsLoadMoreButtonVisible = false;
-            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended);
+            _currentPage = 1;
+            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended, _currentPage);
         }
 
+        public ICommand LoadMoreCommand { get; }
+
+        private void LoadMoreItems()
+        {
+            _currentPage++;
+            LoadSaleItems(SelectedStore, SelectedSorting, IsRecommended, _currentPage);
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

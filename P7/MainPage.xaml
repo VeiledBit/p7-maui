@@ -120,7 +120,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Margin="30, 30, 30, 10" Text="Učitaj Još" IsVisible="{Binding IsLoadMoreButtonVisible}"></Button>
+            <Button Margin="30, 30, 30, 10" Text="Učitaj Još" Command="{Binding LoadMoreCommand}" IsVisible="{Binding IsLoadMoreButtonVisible}"></Button>
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
         </VerticalStackLayout>
     </ScrollView>
