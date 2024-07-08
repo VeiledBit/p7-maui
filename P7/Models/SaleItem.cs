@@ -61,10 +61,18 @@ namespace P7.Models
         public string DisplayPriceSale => FormatPrice(priceSale, unit);
         public string DisplayPriceRegular => FormatPrice(priceRegular, unit);
 
+        public string DisplayDate => FormatDate(saleStartDate, saleEndDate);
+
         private string FormatPrice(float? price, string? unit)
         {
             if (price == null) return string.Empty;
             return unit != null ? $"{price}/{unit}" : price.ToString();
+        }
+
+        private string FormatDate(string? saleStartDate, string? saleEndDate)
+        {
+            if (saleEndDate == null) return $"Od {saleStartDate.Split("-")[2]}.{saleStartDate.Split("-")[1]}";
+            return $"{saleStartDate.Split("-")[2]}.{saleStartDate.Split("-")[1]}-{saleEndDate.Split("-")[2]}.{saleEndDate.Split("-")[1]}";
         }
 
         public bool recommended {  get; set; }

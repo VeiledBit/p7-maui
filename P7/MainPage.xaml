@@ -77,7 +77,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Image Source="{Binding StoreLogo}" MaximumWidthRequest="94" MaximumHeightRequest="50" Grid.Column="0" HorizontalOptions="Start"/>
-                                        <Label Text="24.06-26.06" FontSize="Medium" VerticalOptions="Center" Grid.Column="1" HorizontalOptions="End"/>
+                                        <Label Text="{Binding DisplayDate}" FontSize="Medium" VerticalOptions="Center" Grid.Column="1" HorizontalOptions="End"/>
                                     </Grid> 
 
                                     <!-- Discount Tag -->
