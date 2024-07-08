@@ -89,7 +89,7 @@
                                     <Image Source="{Binding imgUrl}" MaximumWidthRequest="200" MaximumHeightRequest="200" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
 
                                     <!-- Product Details -->
-                                    <Label Text="{Binding name}" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding name}" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
                                     <!-- Price Details -->
                                     <Grid>
