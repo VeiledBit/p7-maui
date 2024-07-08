@@ -14,7 +14,8 @@ namespace P7.Services
 
         public async Task<SaleItemsResponse> getSaleItemsAsync(string storeName, string sorting, bool isRecommended, int currentPage)
         {
-            var response = await _httpClient.GetStringAsync($"https://p7.veiledbit.xyz/saleItems/{storeName}/?page={currentPage}&sort={sorting}&recommended={isRecommended}");
+            string requestUrl = $"https://p7.veiledbit.xyz/saleItems/{storeName}/?page={currentPage}&sort={sorting}&recommended={isRecommended.ToString().ToLower()}";
+            var response = await _httpClient.GetStringAsync(requestUrl);
             var saleItemsResponse = JsonConvert.DeserializeObject<SaleItemsResponse>(response);
             return saleItemsResponse;
         }
