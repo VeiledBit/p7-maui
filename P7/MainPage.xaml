@@ -76,9 +76,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Image Source="{Binding StoreLogo}" WidthRequest="50" HeightRequest="50" Grid.Column="0" HorizontalOptions="Start"/>
+                                        <Image Source="{Binding StoreLogo}" MaximumWidthRequest="94" MaximumHeightRequest="50" Grid.Column="0" HorizontalOptions="Start"/>
                                         <Label Text="24.06-26.06" FontSize="Medium" VerticalOptions="Center" Grid.Column="1" HorizontalOptions="End"/>
-                                    </Grid>
+                                    </Grid> 
 
                                     <!-- Discount Tag -->
                                     <Frame Padding="5" BackgroundColor="LightGoldenrodYellow" CornerRadius="5" HorizontalOptions="End">
@@ -86,33 +86,33 @@
                                     </Frame>
 
                                     <!-- Product Image -->
-                                    <Image Source="{Binding imgUrl}" Aspect="AspectFill" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"/>
+                                    <Image Source="{Binding imgUrl}" MaximumWidthRequest="200" MaximumHeightRequest="200" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
 
                                     <!-- Product Details -->
-                                    <Label Text="{Binding name}" FontSize="Medium" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding name}" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="Center"/>
 
                                     <!-- Price Details -->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1"/>
                                             <ColumnDefinition Width="2*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Label Text="{Binding priceSale}" FontSize="Large" TextColor="Black" Grid.Column="0" HorizontalOptions="End"/>
-                                        <Label Text="{Binding priceRegular}" FontSize="Medium" TextDecorations="Strikethrough" TextColor="Gray" Grid.Column="2" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding priceSale}" FontSize="Large" TextColor="Black" Grid.Column="0" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding priceRegular}" FontSize="Medium" TextDecorations="Strikethrough" TextColor="Gray" Grid.Column="2" HorizontalOptions="Center"/>
                                     </Grid>
 
-                                    <!-- Price per kg -->
+                                    <!-- Price per unit -->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1"/>
                                             <ColumnDefinition Width="2*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Label Text="{Binding pricePerUnitSale}" FontSize="Small" TextColor="Black" Grid.Column="0" HorizontalOptions="End"/>
-                                        <Label Text="{Binding pricePerUnitRegular}" FontSize="Small" TextDecorations="Strikethrough" TextColor="Gray" Grid.Column="2" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding pricePerUnitSale}" FontSize="Small" TextColor="Black" Grid.Column="0" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding pricePerUnitRegular}" FontSize="Small" TextDecorations="Strikethrough" TextColor="Gray" Grid.Column="2" HorizontalOptions="Center"/>
                                     </Grid>
                                 </StackLayout>
                             </Frame>
