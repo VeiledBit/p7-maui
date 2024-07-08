@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:P7.ViewModels"
+             x:Class="P7.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:SalesViewModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid ColumnDefinitions="*"
+                  RowDefinitions="50, 50, 50"
+                Margin="30, 0, 30, 30">
+                <Picker
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    x:Name="pickerStore"
+                    Title="Prodavnica"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    SelectedIndex="{Binding SelectedStoreIndex}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Maxi</x:String>
+                            <x:String>Lidl</x:String>
+                            <x:String>Univerexport</x:String>
+                            <x:String>Gomex</x:String>
+                            <x:String>DIS</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Picker 
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    x:Name="pickerSorting"
+                    Title="Sortiranje"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    SelectedIndex="{Binding SelectedSortingIndex}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Kategorija</x:String>
+                            <x:String>Najveći popust</x:String>
+                            <x:String>Najmanje popust</x:String>
+                            <x:String>Najniža cena</x:String>
+                            <x:String>Najveća cena</x:String>
+                            <x:String>Najniža cena po jediničnoj meri</x:String>
+                            <x:String>Najveća cena po jediničnoj meri</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <StackLayout
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Orientation="Horizontal" 
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="StartAndExpand">
+                    <Switch IsToggled="{Binding IsRecommended}" />
+                    <Label Text="Preporučeno" VerticalOptions="Center" />
+                </StackLayout>
+            </Grid>
+            <CollectionView ItemsSource="{Binding SaleItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout
+                    Padding="30,0"
+                    Spacing="25">
+                            <Frame Margin="0, 5, 0, 5" Padding="10" BorderColor="DimGray" CornerRadius="5" HasShadow="False">
+                                <StackLayout Padding="10">
+                                    <!-- Store Logo and Date Range -->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Source="{Binding StoreLogo}" WidthRequest="50" HeightRequest="50" Grid.Column="0" HorizontalOptions="Start"/>
+                                        <Label Text="24.06-26.06" FontSize="Medium" VerticalOptions="Center" Grid.Column="1" HorizontalOptions="End"/>
+                                    </Grid>
+
+                                    <!-- Discount Tag -->
+                                    <Frame Padding="5" BackgroundColor="LightGoldenrodYellow" CornerRadius="5" HorizontalOptions="End">
+                                        <Label Text="{Binding discountPercentage, StringFormat='-{0}%'}" TextColor="Red" FontAttributes="Bold" FontSize="Medium" />
+                                    </Frame>
+
+                                    <!-- Product Image -->
+                                    <Image Source="{Binding imgUrl}" Aspect="AspectFill" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"/>
+
+                                    <!-- Product Details -->
+                                    <Label Text="{Binding name}" FontSize="Medium" HorizontalOptions="Center"/>
+
+                                    <!-- Price Details -->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding priceSale}" FontSize="Large" TextColor="Black" Grid.Column="0" HorizontalOptions="End"/>
+                                        <Label Text="{Binding priceRegular}" FontSize="Medium" TextDecorations="Strikethrough" TextColor="Gray" Grid.Column="2" HorizontalOptions="Start"/>
+                                    </Grid>
+
+                                    <!-- Price per kg -->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding pricePerUnitSale}" FontSize="Small" TextColor="Black" Grid.Column="0" HorizontalOptions="End"/>
+                                        <Label Text="{Binding pricePerUnitRegular}" FontSize="Small" TextDecorations="Strikethrough" TextColor="Gray" Grid.Column="2" HorizontalOptions="Start"/>
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Margin="30, 30, 30, 10" Text="Učitaj Još" IsVisible="{Binding IsLoadMoreButtonVisible}"></Button>
+            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
