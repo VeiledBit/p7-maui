@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace P7.Models
 {
@@ -62,6 +57,15 @@ namespace P7.Models
         public string store {  get; set; }
 
         public string StoreLogo => $"logo_{store}.webp";
+
+        public string DisplayPriceSale => FormatPrice(priceSale, unit);
+        public string DisplayPriceRegular => FormatPrice(priceRegular, unit);
+
+        private string FormatPrice(float? price, string? unit)
+        {
+            if (price == null) return string.Empty;
+            return unit != null ? $"{price}/{unit}" : price.ToString();
+        }
 
         public bool recommended {  get; set; }
     }
